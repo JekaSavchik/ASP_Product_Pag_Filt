@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Products_ScafPag.Models.Product>
-
+﻿@*@model IEnumerable<Products_ScafPag.Models.Product>*@
+@model PagedList.IPagedList<Products_ScafPag.Models.Product>
+@using PagedList.Mvc;
 @{
     /**/
 
@@ -14,13 +15,13 @@
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Producer)
+            Producer
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Model)
+            Model
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            Price
         </th>
         <th>
             Category
@@ -53,6 +54,13 @@
     }
 
 </table>
+<div>
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, pageSize = Model.PageSize}))
+    Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Products
+</div>
+
+
 <div>
     @Html.ActionLink("Category", "../Categories/index")
 </div>

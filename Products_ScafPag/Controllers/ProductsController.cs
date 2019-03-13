@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Products_ScafPag.Models;
+using PagedList;
+
 
 namespace Products_ScafPag.Controllers
 {
@@ -15,10 +17,11 @@ namespace Products_ScafPag.Controllers
         private ProductContext db = new ProductContext();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 4)
         {
             var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            PagedList<Product> model = new PagedList<Product>(products.ToList(), page, pageSize);
+            return View(model);
         }
 
         // GET: Products/Details/5
